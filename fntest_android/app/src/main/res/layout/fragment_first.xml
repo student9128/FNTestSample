@@ -1,38 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:gravity="center"
+    android:orientation="vertical">
+
     <Button
         android:id="@+id/launch_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Launch Flutter Activity"
+        android:text="Launch /test"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
+
     <Button
         android:id="@+id/launch_button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Launch Flutter Activity2"
+        android:text="Launch /main"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/launch_button"
         tools:ignore="HardcodedText" />
+
     <Button
         android:id="@+id/launch_button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Launch FlutterView Activity"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/launch_button4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/launch_button2"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:id="@+id/launch_button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="main()方法"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/launch_button3"
         tools:ignore="HardcodedText" />
 
     <TextView
@@ -45,4 +61,4 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="HardcodedText" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

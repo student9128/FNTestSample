@@ -9,6 +9,7 @@ import io.flutter.plugin.common.MethodChannel
 
 const val ENGINE_ID = "1"
 const val FRAGMENT_ENGINE_ID = "2"
+const val ENGINE_ID_MAIN = "3"
 class BaseApplication: Application() {
     var count = 0
 
@@ -24,6 +25,16 @@ class BaseApplication: Application() {
                 DartExecutor.DartEntrypoint.createDefault()
             )
         FlutterEngineCache.getInstance().put(ENGINE_ID, flutterEngine)
+
+        val flutterEngineMain = FlutterEngine(this)
+        flutterEngineMain.navigationChannel.setInitialRoute("/onGenerate1")
+        flutterEngineMain
+            .dartExecutor
+            .executeDartEntrypoint(
+                DartExecutor.DartEntrypoint.createDefault()
+            )
+        FlutterEngineCache.getInstance().put(ENGINE_ID_MAIN, flutterEngineMain)
+
         val flutterEngineFragment = FlutterEngine(this)
         flutterEngineFragment
             .dartExecutor

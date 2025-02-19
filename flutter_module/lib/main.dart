@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_module/cell.dart';
+import 'package:get/route_manager.dart';
 import 'package:provider/provider.dart';
 
 /// The entrypoint for the flutter module.
@@ -24,14 +25,83 @@ void main() {
   //     child: const MyApp(),
   //   ),
   // );
-  runApp(Hello());
+  // runApp(Hello());
+  runApp(OnGenerate());
+  // runApp(OnGenerateWithGetX());
 }
 class Hello extends StatelessWidget {
   const Hello({Key? key}):super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(routes: {'/':(context)=>FullScreenView()},);
+    return MaterialApp(
+      routes: {
+        // '/': (context) => HelloTest(),
+        '/hello1': (context) => HelloTest1(),
+        '/hello2': (context) => HelloTest2()
+      },
+      initialRoute: '/hello2',
+    );
+  }
+}
+class OnGenerate extends StatelessWidget {
+  const OnGenerate({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      onGenerateRoute: (settings) {
+    debugPrint('OnGenerate===default=${View.of(context).platformDispatcher.defaultRouteName},${window.defaultRouteName}');
+        debugPrint('OnGenerate====${settings.name}');
+        switch (settings.name) {
+          // case '/':
+          //   return MaterialPageRoute(builder: (_) => OnGenerateTest());
+          case '/onGenerate1':
+            return MaterialPageRoute(builder: (_) => OnGenerateTest1());
+          case '/onGenerate2':
+            return MaterialPageRoute(builder: (_) => OnGenerateTest2());
+          case '/onGenerate3':
+            return MaterialPageRoute(builder: (_) => OnGenerateTest3());
+          // default:
+          //   return MaterialPageRoute(builder: (_) => OnGenerateTest2());
+        }
+      },
+      // routes: {
+      //   // '/': (context) => HelloTest(),
+      //   '/onGenerate1': (context) => OnGenerateTest1(),
+      //   '/onGenerate2': (context) => OnGenerateTest2(),
+      //   '/onGenerate3': (context) => OnGenerateTest3()
+      // },
+      initialRoute:View.of(context).platformDispatcher.defaultRouteName,
+    );
+  }
+}
+class OnGenerateWithGetX extends StatelessWidget {
+  const OnGenerateWithGetX({Key? key}):super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      onGenerateRoute: (settings) {
+        debugPrint('OnGenerateWithGetX====${settings.name}');
+        switch (settings.name) {
+          // case '/':
+          //   return MaterialPageRoute(builder: (_) => OnGenerateTest());
+          case '/onGenerate1':
+            return MaterialPageRoute(builder: (_) => OnGenerateTest1());
+           case '/onGenerate2':
+            return MaterialPageRoute(builder: (_) => OnGenerateTest2());
+          // default:
+          //   return MaterialPageRoute(builder: (_) => OnGenerateTest2());
+        }
+      },
+      // routes: {
+      //   // '/': (context) => HelloTest(),
+      //   '/onGenerate1': (context) => OnGenerateTest1(),
+      //   '/onGenerate2': (context) => OnGenerateTest2()
+      // },
+      initialRoute: '/onGenerate2',
+    );
   }
 }
 
@@ -244,6 +314,98 @@ class TestXViewN extends StatelessWidget {
   }
 }
 
+class HelloTest extends StatelessWidget {
+  const HelloTest({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(centerTitle: true,title: Text('Hello'),),
+      body: Container(child: Text('main方法中hello'),),
+    );
+  }
+}
+class HelloTest1 extends StatelessWidget {
+  const HelloTest1({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(centerTitle: true,title: Text('Hello1'),),
+      body: Container(child: Text('main方法中hello1'),),
+    );
+  }
+}
+class HelloTest2 extends StatelessWidget {
+  const HelloTest2({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(centerTitle: true,title: Text('Hello2'),),
+      body: Container(child: Text('main方法中hello2'),),
+    );
+  }
+}
+
+//
+class OnGenerateTest extends StatelessWidget {
+  const OnGenerateTest({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(centerTitle: true,title: Text('OnGenerateTest'),),
+      body: Container(child: Text('main方法中OnGenerateTest'),),
+    );
+  }
+}
+class OnGenerateTest1 extends StatelessWidget {
+  const OnGenerateTest1({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(centerTitle: true,title: Text('OnGenerateTest1'),),
+      body: Container(child: Text('main方法中OnGenerateTest1'),),
+    );
+  }
+}
+
+class OnGenerateTest3 extends StatefulWidget {
+  const OnGenerateTest3({Key? key}) : super(key: key);
+
+  @override
+  State<OnGenerateTest3> createState() => _OnGenerateTest3State();
+}
+
+class _OnGenerateTest3State extends State<OnGenerateTest3> {
+  @override
+  void initState() {
+    super.initState();
+    debugPrint('initState=====');
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    debugPrint('build=====');
+     return Scaffold(
+      appBar: AppBar(centerTitle: true,title: Text('OnGenerateTest3'),),
+      body: Container(child: Text('main方法中OnGenerateTest3'),),
+    );
+  }
+}
+class OnGenerateTest2 extends StatelessWidget {
+  const OnGenerateTest2({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(centerTitle: true,title: Text('OnGenerateTest2'),),
+      body: Container(child: Text('main方法中OnGenerateTest2'),),
+    );
+  }
+}
 
 /// The actual content displayed by the module.
 ///
