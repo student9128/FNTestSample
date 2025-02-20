@@ -26,8 +26,8 @@ void main() {
   //   ),
   // );
   // runApp(Hello());
-  runApp(OnGenerate());
-  // runApp(OnGenerateWithGetX());
+  // runApp(OnGenerate());
+  runApp(OnGenerateWithGetX());
 }
 class Hello extends StatelessWidget {
   const Hello({Key? key}):super(key: key);
@@ -82,25 +82,25 @@ class OnGenerateWithGetX extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      onGenerateRoute: (settings) {
-        debugPrint('OnGenerateWithGetX====${settings.name}');
-        switch (settings.name) {
-          // case '/':
-          //   return MaterialPageRoute(builder: (_) => OnGenerateTest());
-          case '/onGenerate1':
-            return MaterialPageRoute(builder: (_) => OnGenerateTest1());
-           case '/onGenerate2':
-            return MaterialPageRoute(builder: (_) => OnGenerateTest2());
-          // default:
-          //   return MaterialPageRoute(builder: (_) => OnGenerateTest2());
-        }
-      },
-      // routes: {
-      //   // '/': (context) => HelloTest(),
-      //   '/onGenerate1': (context) => OnGenerateTest1(),
-      //   '/onGenerate2': (context) => OnGenerateTest2()
+      // onGenerateRoute: (settings) {
+      //   debugPrint('OnGenerateWithGetX====${settings.name}');
+      //   switch (settings.name) {
+      //     // case '/':
+      //     //   return MaterialPageRoute(builder: (_) => OnGenerateTest());
+      //     case '/onGenerate1':
+      //       return MaterialPageRoute(builder: (_) => OnGenerateTest1());
+      //      case '/onGenerate2':
+      //       return MaterialPageRoute(builder: (_) => OnGenerateTest2());
+      //     // default:
+      //     //   return MaterialPageRoute(builder: (_) => OnGenerateTest2());
+      //   }
       // },
-      initialRoute: '/onGenerate2',
+      routes: {
+        // '/': (context) => HelloTest(),
+        '/onGenerate1': (context) => onGenerate1(),
+        '/onGenerate2': (context) => OnGenerateTest2()
+      },
+      initialRoute: window.defaultRouteName,
     );
   }
 }
@@ -360,6 +360,34 @@ class OnGenerateTest extends StatelessWidget {
     );
   }
 }
+class onGenerate1 extends StatefulWidget {
+  const onGenerate1({Key? key}) : super(key: key);
+
+  @override
+  State<onGenerate1> createState() => _onGenerate1State();
+}
+
+class _onGenerate1State extends State<onGenerate1> {
+  var _result='等待回调';
+  @override
+  Widget build(BuildContext context) {
+     return Scaffold(
+      appBar: AppBar(centerTitle: true,title: Text('OnGenerateTest1'),),
+      body:Column(children: [
+        Container(child: Text('main方法中OnGenerateTest1'),),
+        Text(_result),
+        ElevatedButton(onPressed:(){
+          Get.to(()=>OnGenerateTest2())?.then((result){
+            debugPrint("result============$result");
+            setState(() {
+              _result="回调结果$result";
+            });
+          });
+        }, child: Text('跳转到下一个页面'))
+      ],),
+    );
+  }
+}
 class OnGenerateTest1 extends StatelessWidget {
   const OnGenerateTest1({Key? key}) : super(key: key);
 
@@ -367,7 +395,14 @@ class OnGenerateTest1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(centerTitle: true,title: Text('OnGenerateTest1'),),
-      body: Container(child: Text('main方法中OnGenerateTest1'),),
+      body:Column(children: [
+        Container(child: Text('main方法中OnGenerateTest1'),),
+        ElevatedButton(onPressed:(){
+          Get.to(()=>OnGenerateTest2())?.then((result){
+            debugPrint("result============$result");
+          });
+        }, child: Text('跳转到下一个页面'))
+      ],),
     );
   }
 }
@@ -391,7 +426,14 @@ class _OnGenerateTest3State extends State<OnGenerateTest3> {
     debugPrint('build=====');
      return Scaffold(
       appBar: AppBar(centerTitle: true,title: Text('OnGenerateTest3'),),
-      body: Container(child: Text('main方法中OnGenerateTest3'),),
+      body: Column(children: [
+        Container(child: Text('main方法中OnGenerateTest3'),),
+        ElevatedButton(onPressed:(){
+          // Get.until((route)=>route.settings.name=='/onGenerate1');
+          Get.back();
+          Get.back(result: "Hello to 1");
+        }, child: Text('返回到1'))
+      ],),
     );
   }
 }
@@ -402,7 +444,12 @@ class OnGenerateTest2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(centerTitle: true,title: Text('OnGenerateTest2'),),
-      body: Container(child: Text('main方法中OnGenerateTest2'),),
+      body: Column(children: [
+        Container(child: Text('main方法中OnGenerateTest2'),),
+        ElevatedButton(onPressed:(){
+          Get.to(()=>OnGenerateTest3());
+        }, child: Text('跳转到下一个页面'))
+      ],),
     );
   }
 }
